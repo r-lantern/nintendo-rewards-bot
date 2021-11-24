@@ -1,3 +1,10 @@
-DB_URI = 
+from os import environ
+
+DB_URI = "mongodb://localhost:27017/"
 DB_NINTENDO = "nintendo"
 COLLECTION_REWARDS = "rewards"
+
+CONSUMER_KEY = environ.get("TWITTER_NINBOT_CONSUMER_KEY")
+CONSUMER_SECRET = environ.get("TWITTER_NINBOT_CONSUMER_SECRET")
+ACCESS_TOKEN = environ.get("TWITTER_NINBOT_ACCESS_TOKEN")
+ACCESS_SECRET = environ.get("TWITTER_NINBOT_ACCESS_SECRET")
