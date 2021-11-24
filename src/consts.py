@@ -9,3 +9,10 @@ TAGS = {
     STATUS_STOCK_IN: "BACK IN STOCK",
     STATUS_STOCK_OUT: "OUT OF STOCK",
 }
+
+TWEET_TEMPLATE = """
+[ {tag} ] {title}
+Available: {start_time} - {end_time}
+Cost: {points_value} {points_type} Coins
+{url}
+"""
