@@ -13,6 +13,7 @@ TAGS = {
 TWEET_TEMPLATE = """
 [ {tag} ] {title}
 Available: {start_time} - {end_time}
+Category: {type}
 Cost: {points_value} {points_type} Coins
 {url}
 """
