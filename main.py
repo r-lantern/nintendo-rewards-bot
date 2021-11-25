@@ -1,16 +1,16 @@
 from src import config as config
 from src import consts as consts
-from src import utils as utils
 from src import mynintendo as mynintendo
+from src import reward as reward
 from src.twitter import Twitter
-from src.database import Database
+from src.nintendo_db import NintendoDB
 
 
 def main():
     req = mynintendo.get_store_request()
     new_products = mynintendo.get_rewards(req)
 
-    nintendoDB = Database(config.DB_URI, config.DB_NINTENDO)
+    nintendoDB = NintendoDB(config.DB_URI, config.DB_NINTENDO)
 
     product_deltas = {
         consts.STATUS_NEW: [],
@@ -18,47 +18,34 @@ def main():
         consts.STATUS_STOCK_OUT: [],
     }
 
-    for product in new_products:
-        old_product = nintendoDB.db[config.COLLECTION_REWARDS].find_one(
-            {"id": product["id"]}
-        )
+    for new_product in new_products:
+        old_product = nintendoDB.get_product_from_id(new_product["id"])
+        old_stock = reward.get_stock(old_product)
+        new_stock = reward.get_stock(new_product)
 
         if not old_product:
-            product_deltas[consts.STATUS_NEW].append(product)
-
-        elif "stock" in old_product:
-            if product["stock"]["available"] != old_product["stock"]["available"]:
-                if product["stock"]["available"] is True:
-                    product_deltas[consts.STATUS_STOCK_IN].append(product)
+            product_deltas[consts.STATUS_NEW].append(new_product)
+        elif old_stock is not None:
+            if new_stock != old_stock:
+                if new_stock:
+                    product_deltas[consts.STATUS_STOCK_IN].append(new_product)
                 else:
-                    product_deltas[consts.STATUS_STOCK_OUT].append(product)
+                    product_deltas[consts.STATUS_STOCK_OUT].append(new_product)
 
-    nintendoDB.override_collection(config.COLLECTION_REWARDS, new_products)
+    nintendoDB.drop_and_insert(config.COLLECTION_REWARDS, new_products)
 
     twitter = Twitter()
     for key in product_deltas:
         for product in product_deltas[key]:
-
-            # endsAt is an optional key
-            end_time = ""
-            if product["endsAt"]:
-                end_time = utils.convert_time(product["endsAt"])
-
-            # points type in one of two locations
-            if "key" not in product["points"][0]:
-                points_type = product["points"][0]["category"]
-            else:
-                points_type = product["points"][0]["key"]
-
+            metadata = reward.get_metadata(product)
             message = consts.TWEET_TEMPLATE.format(
                 tag=consts.TAGS[key],
-                title=product["title"],
-                start_time=utils.convert_time(product["beginsAt"]),
-                end_time=end_time,
-                type=product["category"].replace("_", " ").title(),
-                points_value=product["points"][0]["amount"],
-                points_type=points_type.replace("_", " ").title(),
-                url=product["links"]["myNintendo"]["href"],
+                title=metadata["title"],
+                start_time=metadata["start_time"],
+                end_time=metadata["end_time"],
+                points_value=metadata["points_value"],
+                points_type=metadata["points_type"],
+                url=metadata["url"],
             )
 
             twitter.tweet(message)

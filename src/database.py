@@ -10,6 +10,6 @@ class Database:
     def __exit__(self) -> None:
         self.client.close()
 
-    def override_collection(self, collection: str, entries: List) -> None:
+    def drop_and_insert(self, collection: str, entries: List) -> None:
         self.db[collection].drop()
         self.db[collection].insert_many(entries)
