@@ -1,4 +1,4 @@
-PAGE_REWARDS_STORE = "https://my.nintendo.com/reward_categories/nintendo_store"
+PAGE_REWARDS_STORE = "https://my.nintendo.com/reward_categories/media"
 
 STATUS_NEW = "new"
 STATUS_STOCK_IN = "stock_in"
