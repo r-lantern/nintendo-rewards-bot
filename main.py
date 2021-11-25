@@ -55,6 +55,7 @@ def main():
                 title=product["title"],
                 start_time=utils.convert_time(product["beginsAt"]),
                 end_time=end_time,
+                type=product["category"].replace("_", " ").title(),
                 points_value=product["points"][0]["amount"],
                 points_type=points_type.replace("_", " ").title(),
                 url=product["links"]["myNintendo"]["href"],
