@@ -9,7 +9,7 @@ import src.consts as consts
 def get_store_request() -> requests.Response:
     session = requests_html.HTMLSession()
     req = session.get(consts.PAGE_REWARDS_STORE)
-    req.html.render()
+    req.html.render(retries=2, timeout=30)
     session.close()
     return req
 
