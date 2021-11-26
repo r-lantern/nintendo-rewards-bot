@@ -37,15 +37,15 @@ def get_url(product: dict) -> str:
     return product["links"]["myNintendo"]["href"]
 
 
-def get_metadata(self, product: dict) -> dict:
+def get_metadata(product: dict) -> dict:
     data = {
-        "title": self.get_title(product),
-        "start_time": self.get_start_time(product),
-        "end_time": self.get_end_time(product),
-        "category": self.get_category(product),
-        "points_value": self.product(product),
-        "points_type": self.product(product),
-        "url": self.product(product),
+        "title": get_title(product),
+        "start_time": get_start_time(product),
+        "end_time": get_end_time(product),
+        "category": get_category(product),
+        "points_value": get_points_value(product),
+        "points_type": get_points_type(product),
+        "url": get_url(product),
     }
     return data
 
