@@ -8,7 +8,7 @@ class Twitter:
         self.auth.set_access_token(config.ACCESS_TOKEN, config.ACCESS_SECRET)
 
         self.api = tweepy.API(self.auth)
+        self.api.verify_credentials()
 
     def tweet(self, msg: str) -> None:
-        self.api.verify_credentials()
         self.api.update_status(msg)
