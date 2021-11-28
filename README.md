@@ -46,11 +46,11 @@ The [My Nintendo](https://my.nintendo.com/) website redirects their users to dif
    * database's URI
    * db and collection names (step 7)
 
-### Executing the script
+## Executing the script
 1. Run `main.py`
 2. (Optional) Set up a cron to automatically run `main.py`
 
-#### Additional Notes
+### Additional Notes
 Upon your first execution:
 * Chromium will be installed (if not already on your system)
 * Every item in the catalogue will be tweeted as \[ NEW \]
