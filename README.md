@@ -13,7 +13,7 @@ The [My Nintendo](https://my.nintendo.com/) website redirects their users to dif
 4. Access your browser's developer tools
 5. Under _Elements_ (Chrome) or _Inspector_ (Firefox), search for `embeddedResponses: JSON.parse`
    * If the string is found, and what follows looks like product information, this project is applicable to you
-   * If not, this script will not be able to scrape your country's My Nintendo physical rewards catalogue, but may still work for their digital rewards. To check, simply click on any other reward categories and repeat steps 4 and 5.
+   * If not, this script will not be able to scrape your country's My Nintendo physical rewards catalogue, but may still work for their digital rewards. To check, simply click on any other reward category and repeat steps 4 and 5.
 
 ## Installation 
 ### Prerequisites
