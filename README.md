@@ -43,8 +43,8 @@ The [My Nintendo](https://my.nintendo.com/) website redirects their users to dif
 7. In MongoDB, create a `db` and `collection` for this project 
 8. Modify `src/config.py` with your:
    * Environment variable names (step 6)
-   * database's URI
-   * db and collection names (step 7)
+   * Database's URI
+   * `db` and `collection` names (step 7)
 
 ## Execution
 1. Run `main.py`
