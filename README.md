@@ -46,7 +46,7 @@ The [My Nintendo](https://my.nintendo.com/) website redirects their users to dif
    * database's URI
    * db and collection names (step 7)
 
-## Executing the script
+## Execution
 1. Run `main.py`
 2. (Optional) Set up a cron to automatically run `main.py`
 
