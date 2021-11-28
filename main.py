@@ -2,6 +2,7 @@ from src import config as config
 from src import consts as consts
 from src import mynintendo as mynintendo
 from src import reward as reward
+from src import error as error
 from src.twitter import Twitter
 from src.nintendo_db import NintendoDB
 
@@ -9,6 +10,8 @@ from src.nintendo_db import NintendoDB
 def main():
     req = mynintendo.get_store_request()
     new_products = mynintendo.get_rewards(req)
+    if not new_products:
+        raise error.RewardsStringNotFound
 
     nintendoDB = NintendoDB(config.DB_URI, config.DB_NINTENDO)
 

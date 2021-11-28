@@ -4,12 +4,17 @@ import requests
 import json
 
 import src.consts as consts
+from src import error
 
 
 def get_store_request() -> requests.Response:
     session = requests_html.HTMLSession()
     req = session.get(consts.PAGE_REWARDS_STORE)
-    req.html.render(retries=2, timeout=30)
+    try:
+        req.html.render(retries=2, timeout=30)
+    except requests_html.TimeoutError:
+        session.close()
+        raise error.SiteUnreachable
     session.close()
     return req
 
@@ -22,5 +27,7 @@ def get_rewards(req: requests.Response) -> List:
     line = line.strip('embeddedResponses: JSON.parse("').rstrip('"),')
     line = line.encode("latin1", "ignore").decode("unicode-escape", "replace")
     response = json.loads(line)
-    rewards = response["api_reward_list"]["data"]["items"]
-    return rewards
+    if "api_reward_list" in response:
+        rewards = response["api_reward_list"]["data"]["items"]
+        return rewards
+    return None
