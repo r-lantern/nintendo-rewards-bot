@@ -17,7 +17,7 @@ The [My Nintendo](https://my.nintendo.com/) website redirects their users to dif
 
 ## Installation 
 ### Prerequisites
-* A Twitter Developer account with Elevated access
+* A Twitter Developer account with _elevated_ access
 * Read and write premissions to a MongoDB server
 
 ### Setting up
