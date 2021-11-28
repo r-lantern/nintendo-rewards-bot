@@ -17,3 +17,5 @@ Category: {category}
 Cost: {points_value} {points_type} Coins
 {url}
 """
+
+TWEET_MAX_LENGTH = 280

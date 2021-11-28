@@ -38,19 +38,8 @@ def main():
     twitter = Twitter()
     for key in product_deltas:
         for product in product_deltas[key]:
-            metadata = reward.get_metadata(product)
-            message = consts.TWEET_TEMPLATE.format(
-                tag=consts.TAGS[key],
-                title=metadata["title"],
-                start_time=metadata["start_time"],
-                end_time=metadata["end_time"],
-                category=metadata["category"],
-                points_value=metadata["points_value"],
-                points_type=metadata["points_type"],
-                url=metadata["url"],
-            )
-
-            twitter.tweet(message)
+            msg = reward.build_tweet(key, product)
+            twitter.tweet(msg)
 
 
 if __name__ == "__main__":
