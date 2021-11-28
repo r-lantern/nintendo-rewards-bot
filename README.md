@@ -4,7 +4,7 @@
 A Twitter bot that highlights catalogue and inventory changes for [My Nintendo](https://my.nintendo.com/reward_categories) rewards.
 
 ## Before you start
-The [My Nintendo](https://my.nintendo.com/) website redirects their users to different reward pages based on their IP address. For their physical rewards catalogue in particular, this script may not work in your counrtry of residence. 
+The [My Nintendo](https://my.nintendo.com/) website redirects their users to different reward pages based on their IP address. For the physical rewards catalogue in particular, this script may not work in your counrtry of residence. 
 
 ### How to check
 1. Go to the [My Nintendo](https://my.nintendo.com/) website
@@ -45,6 +45,7 @@ The [My Nintendo](https://my.nintendo.com/) website redirects their users to dif
    * Environment variable names (step 6)
    * Database's URI
    * `db` and `collection` names (step 7)
+9. Start or ensure that your MongoDB server is running 
 
 ## Execution
 1. Run `main.py`
