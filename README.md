@@ -31,20 +31,20 @@ The [My Nintendo](https://my.nintendo.com/) website redirects their users to dif
    ```
    chmod +x pyppeteer_fix.sh
    ```
-6. Run `pyppeteer_fix.sh` -- Written for Ubuntu 20.04 (Modifications may be required)
+5. Run `pyppeteer_fix.sh` -- Written for Ubuntu 20.04 (Modifications may be required)
    ```
    ./pyppeteer_fix.sh
    ```
-8. Set environment variables for your Twitter project's:
+6. Set environment variables for your Twitter project's:
    * Consumer key
    * Consumer secret
    * Access token
    * Access secret
-9. In MongoDB, create a `db` and `collection` for this project 
-10. Modify `src/config.py` with your:
-   * Environment variable names (step 8)
+7. In MongoDB, create a `db` and `collection` for this project 
+8. Modify `src/config.py` with your:
+   * Environment variable names (step 6)
    * database's URI
-   * db and collection names (step 9)
+   * db and collection names (step 7)
 
 ### Executing the script
 1. Run `main.py`
