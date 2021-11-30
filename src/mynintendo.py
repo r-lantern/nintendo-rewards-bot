@@ -10,11 +10,7 @@ from src import error
 def get_store_request() -> requests.Response:
     session = requests_html.HTMLSession()
     req = session.get(consts.PAGE_REWARDS_STORE)
-    try:
-        req.html.render(retries=2, timeout=30)
-    except requests_html.TimeoutError:
-        session.close()
-        raise error.SiteUnreachable
+    req.html.render(retries=2, timeout=30)
     session.close()
     return req
 
