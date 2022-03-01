@@ -1,3 +1,4 @@
+from unicodedata import digit
 from src.reward import Reward
 from src import config as config
 from src import consts as consts
@@ -24,21 +25,24 @@ def main():
             digital_reward_deltas.add(reward)
 
     for new_physical_reward in new_physical_rewards:
-        old_physical_reward = nintendoDB.get_product_from_sku(
-            new_physical_reward["sku"]
-        )
+        sku = new_physical_reward["sku"]
+        old_physical_reward = nintendoDB.get_product_from_sku(sku)
         if not old_physical_reward:
             reward = Reward(new_physical_reward)
+            if nintendoDB.is_product_restock(sku):
+                reward.status = consts.STATUS_RESTOCKED
+            else:
+                nintendoDB.insert_one(config.COLLECTION_PHYSICAL_SKU, {"sku": sku})
             physical_reward_deltas.add(reward)
 
     twitter = Twitter()
     for reward in digital_reward_deltas:
-        msg = digital_reward.build_tweet(consts.STATUS_NEW, reward)
+        msg = digital_reward.build_tweet(reward)
         twitter.post_tweet(msg)
     nintendoDB.drop_and_insert(config.COLLECTION_DIGITAL_REWARDS, new_digital_rewards)
 
     for reward in physical_reward_deltas:
-        msg = physical_reward.build_tweet(consts.STATUS_NEW, reward)
+        msg = physical_reward.build_tweet(reward)
         twitter.post_tweet(msg)
     nintendoDB.drop_and_insert(config.COLLECTION_PHYSICAL_REWARDS, new_physical_rewards)
 

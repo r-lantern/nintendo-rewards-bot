@@ -14,10 +14,10 @@ def get_cost(product: dict) -> str:
     return product["platinumPoints"] + " Platinum Points"
 
 
-def build_tweet(tag: str, reward: Reward) -> str:
+def build_tweet(reward: Reward) -> str:
     data = reward.data
     msg = consts.TWEET_PHYSICAL_REWARDS_TEMPLATE.format(
-        tag=consts.STATUS_NEW,
+        status=reward.status,
         name=get_name(data),
         cost=get_cost(data),
         url=get_url(data),

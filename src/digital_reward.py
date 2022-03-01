@@ -45,10 +45,10 @@ def get_stock(product: dict) -> bool:
     return None
 
 
-def build_tweet(tag: str, reward: Reward) -> str:
+def build_tweet(reward: Reward) -> str:
     data = reward.data
     msg = consts.TWEET_DIGITAL_REWARDS_TEMPLATE.format(
-        tag=consts.STATUS_NEW,
+        status=reward.status,
         title=get_title(data),
         start_time=get_start_time(data),
         end_time=get_end_time(data),

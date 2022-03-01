@@ -13,3 +13,6 @@ class Database:
     def drop_and_insert(self, collection: str, entries: List) -> None:
         self.db[collection].drop()
         self.db[collection].insert_many(entries)
+
+    def insert_one(self, collection: str, entry: set) -> None:
+        self.db[collection].insert_one(entry)
