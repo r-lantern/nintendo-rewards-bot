@@ -1,21 +1,20 @@
-PAGE_REWARDS_STORE = "https://my.nintendo.com/reward_categories/media"
+PAGE_DIGITAL_REWARDS = "https://my.nintendo.com/reward_categories/media"
+PAGE_PHYSICAL_REWARDS = "https://www.nintendo.com/en-ca/store/exclusives/rewards/"
+URI_STORE_PRODUCTS = "https://www.nintendo.com/en-ca/store/products/"
 
-STATUS_NEW = "new"
-STATUS_STOCK_IN = "stock_in"
-STATUS_STOCK_OUT = "stock_out"
+STATUS_NEW = "NEW"
 
-TAGS = {
-    STATUS_NEW: "NEW",
-    STATUS_STOCK_IN: "BACK IN STOCK",
-    STATUS_STOCK_OUT: "OUT OF STOCK",
-}
-
-TWEET_TEMPLATE = """
+TWEET_DIGITAL_REWARDS_TEMPLATE = """
 [ {tag} ] {title}
 Available: {start_time} - {end_time}
 Category: {category}
-Cost: {points_value} {points_type} Coins
-{url}
-"""
+Cost: {points_value} {points_type} Points
+{url}"""
+
+TWEET_PHYSICAL_REWARDS_TEMPLATE = """
+[ {tag} ] {name}
+Category: My Nintendo Store
+Cost: {cost}
+{url}"""
 
 TWEET_MAX_LENGTH = 280

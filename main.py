@@ -1,48 +1,46 @@
+from src.reward import Reward
 from src import config as config
 from src import consts as consts
 from src import mynintendo as mynintendo
-from src import reward as reward
-from src import error as error
+from src import digital_reward as digital_reward
+from src import physical_reward as physical_reward
 from src.twitter import Twitter
 from src.nintendo_db import NintendoDB
 
 
 def main():
-    req = mynintendo.get_store_request()
-    new_products = mynintendo.get_rewards(req)
-    if not new_products:
-        raise error.RewardsStringNotFound
+    new_digital_rewards = mynintendo.get_digital_rewards()
+    new_physical_rewards = mynintendo.get_physical_rewards()
 
     nintendoDB = NintendoDB(config.DB_URI, config.DB_NINTENDO)
 
-    product_deltas = {
-        consts.STATUS_NEW: [],
-        consts.STATUS_STOCK_IN: [],
-        consts.STATUS_STOCK_OUT: [],
-    }
+    digital_reward_deltas = set()
+    physical_reward_deltas = set()
 
-    for new_product in new_products:
-        old_product = nintendoDB.get_product_from_id(new_product["id"])
+    for new_digital_reward in new_digital_rewards:
+        old_digital_reward = nintendoDB.get_product_from_id(new_digital_reward["id"])
+        if not old_digital_reward:
+            reward = Reward(new_digital_reward)
+            digital_reward_deltas.add(reward)
 
-        if not old_product:
-            product_deltas[consts.STATUS_NEW].append(new_product)
-        else:
-            old_stock = reward.get_stock(old_product)
-            new_stock = reward.get_stock(new_product)
-            if old_stock is not None:
-                if new_stock != old_stock:
-                    if new_stock:
-                        product_deltas[consts.STATUS_STOCK_IN].append(new_product)
-                    else:
-                        product_deltas[consts.STATUS_STOCK_OUT].append(new_product)
-
-    nintendoDB.drop_and_insert(config.COLLECTION_REWARDS, new_products)
+    for new_physical_reward in new_physical_rewards:
+        old_physical_reward = nintendoDB.get_product_from_sku(
+            new_physical_reward["sku"]
+        )
+        if not old_physical_reward:
+            reward = Reward(new_physical_reward)
+            physical_reward_deltas.add(reward)
 
     twitter = Twitter()
-    for key in product_deltas:
-        for product in product_deltas[key]:
-            msg = reward.build_tweet(key, product)
-            twitter.tweet(msg)
+    for reward in digital_reward_deltas:
+        msg = digital_reward.build_tweet(consts.STATUS_NEW, reward)
+        twitter.post_tweet(msg)
+    nintendoDB.drop_and_insert(config.COLLECTION_DIGITAL_REWARDS, new_digital_rewards)
+
+    for reward in physical_reward_deltas:
+        msg = physical_reward.build_tweet(consts.STATUS_NEW, reward)
+        twitter.post_tweet(msg)
+    nintendoDB.drop_and_insert(config.COLLECTION_PHYSICAL_REWARDS, new_physical_rewards)
 
 
 if __name__ == "__main__":

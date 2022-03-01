@@ -4,4 +4,10 @@ from src.database import Database
 
 class NintendoDB(Database):
     def get_product_from_id(self, id: str) -> dict:
-        return self.db[config.COLLECTION_REWARDS].find_one({"id": id})
+        return self.db[config.COLLECTION_DIGITAL_REWARDS].find_one({"id": id})
+
+    def get_product_from_sku(self, sku: int) -> dict:
+        return self.db[config.COLLECTION_PHYSICAL_REWARDS].find_one({"sku": sku})
+
+    def remove_product_from_sku(self, sku: int) -> dict:
+        return self.db[config.COLLECTION_PHYSICAL_REWARDS].remove({"sku": sku})

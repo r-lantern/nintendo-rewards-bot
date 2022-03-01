@@ -4,18 +4,26 @@ import requests
 import json
 
 import src.consts as consts
-from src import error
 
 
-def get_store_request() -> requests.Response:
+def get_request(page: str) -> requests.Response:
     session = requests_html.HTMLSession()
-    req = session.get(consts.PAGE_REWARDS_STORE)
+    req = session.get(page)
     req.html.render(retries=2, timeout=30)
     session.close()
     return req
 
 
-def get_rewards(req: requests.Response) -> List:
+def get_digital_rewards_req() -> requests.Response:
+    return get_request(consts.PAGE_DIGITAL_REWARDS)
+
+
+def get_physical_rewards_req() -> requests.Response:
+    return get_request(consts.PAGE_PHYSICAL_REWARDS)
+
+
+def get_digital_rewards() -> List:
+    req = get_digital_rewards_req()
     html = req.html.html.split("\n")
     for line in html:
         if "embeddedResponses: JSON.parse" in line:
@@ -26,4 +34,11 @@ def get_rewards(req: requests.Response) -> List:
     if "api_reward_list" in response:
         rewards = response["api_reward_list"]["data"]["items"]
         return rewards
-    return None
+
+
+def get_physical_rewards() -> List:
+    req = get_physical_rewards_req()
+    html = req.html.find("#__NEXT_DATA__", first=True).text
+    response = json.loads(html)
+    items = response["props"]["pageProps"]["page"]["content"]["merchandisedGrid"][0]
+    return items
