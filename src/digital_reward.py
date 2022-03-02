@@ -8,13 +8,15 @@ def get_title(product: dict) -> str:
 
 
 def get_start_time(product: dict) -> str:
-    return utils.convert_time(product["beginsAt"])
+    epoch_time = utils.convert_time(product["beginsAt"])
+    return utils.format_time(epoch_time)
 
 
 def get_end_time(product: dict) -> str:
     end_time = "Undefined"
     if product["endsAt"]:
-        end_time = utils.convert_time(product["endsAt"])
+        epoch_time = utils.convert_time(product["endsAt"])
+        end_time = utils.format_time(epoch_time)
     return end_time
 
 
@@ -47,7 +49,7 @@ def get_stock(product: dict) -> bool:
 
 def build_tweet(reward: Reward) -> str:
     data = reward.data
-    msg = consts.TWEET_DIGITAL_REWARDS_TEMPLATE.format(
+    msg = consts.TWEET_REWARDS_TEMPLATE.format(
         status=reward.status,
         title=get_title(data),
         start_time=get_start_time(data),
