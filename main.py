@@ -1,4 +1,3 @@
-from unicodedata import digit
 from src.reward import Reward
 from src import config as config
 from src import consts as consts
