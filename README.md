@@ -11,7 +11,7 @@ The [My Nintendo](https://my.nintendo.com/) website redirects their users to dif
 1. Go to [My Nintendo](https://my.nintendo.com/)
 2. Navigate to _Redeem Points_ > _Smart device/PC rewards_
 3. Access your browser's developer tools
-4. Under _Elements_ (Chrome) or _Inspector_ (Firefox), search for `embeddedResponses: JSON.parse`. 
+4. Under _Elements_ (Chrome) or _Inspector_ (Firefox), search for `embeddedResponses: JSON.parse`
 
 If the string is found and is followed by product information, digital products can be identified.
 
@@ -20,7 +20,7 @@ If the string is found and is followed by product information, digital products 
 2. Navigate to _Redeem Points_ > _My Nintendo Store rewards_
 3. Ensure that the appropriate region was selected, displayed on the bottom-right of the page
 4. Access your browser's developer tools
-5. Under _Elements_ (Chrome) or _Inspector_ (Firefox), search for `__NEXT_DATA__`. 
+5. Under _Elements_ (Chrome) or _Inspector_ (Firefox), search for `__NEXT_DATA__`
 
 If the string is found and is followed by product information, physical products can be identified.
 
@@ -44,7 +44,7 @@ If the string is found and is followed by product information, physical products
    ```
    ./pyppeteer_fix.sh
    ```
-6. Set environment variables for your Twitter project's:
+6. Set environment variables for your Twitter:
    * Consumer key
    * Consumer secret
    * Access token
@@ -71,6 +71,6 @@ If the string is found and is followed by product information, physical products
 ### Additional notes
 Upon your first execution:
 * Chromium will be installed (if it is not already on your system)
-* Every item in the catalogue will be tweeted as \[ NEW \]. 
+* Every item in the catalogue will be tweeted as \[ NEW \]
   *  To by-pass this, prior to your first execution, comment out `twitter.post_tweet(msg)` to populate your database
-  *  Afterwards, do not forget to comment it back in
+  *  Afterwards, do not forget to uncomment those lines
