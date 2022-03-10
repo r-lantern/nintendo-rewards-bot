@@ -20,7 +20,7 @@ def build_tweet(reward: Reward) -> str:
     msg = consts.TWEET_REWARDS_TEMPLATE.format(
         status=reward.status,
         title=get_name(data),
-        start_time=utils.format_time(utils.get_date()),
+        start_time=utils.format_time(utils.get_current_time()),
         end_time="Undefined",
         category="My Nintendo Store",
         points_value=get_cost(data),
