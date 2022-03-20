@@ -21,7 +21,7 @@ def build_tweet(reward: Reward) -> str:
         status=reward.status,
         title=get_name(data),
         start_time=utils.format_time(utils.get_current_time()),
-        end_time="Undefined",
+        end_time="While supplies last",
         category="My Nintendo Store",
         points_value=get_cost(data),
         points_type="Platinum",
