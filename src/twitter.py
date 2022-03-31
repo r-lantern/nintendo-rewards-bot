@@ -26,7 +26,7 @@ class Twitter:
             if len(msg) - 1 > consts.TWEET_MAX_LENGTH:
                 split_msg = msg.split("\n")
                 url = split_msg[-1]
-                new_msg = msg[: -1 * (len(url) - 1)]
+                new_msg = msg[: -1 * len(url)]
                 if len(new_msg) - 1 <= consts.TWEET_MAX_LENGTH:
                     tweet = self.api.update_status(new_msg)
                     if len(url) - 1 <= consts.TWEET_MAX_LENGTH:
